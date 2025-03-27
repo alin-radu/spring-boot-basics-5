@@ -19,6 +19,10 @@ public class SocialGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // SocialUser
+    // SocialGroup is NOT the owner in the SocialUser <-> SocialGroup relationship;
+    // SocialUser holds the @JoinTable;
+    // SocialGroups holds the mappedBy;
     @ManyToMany(mappedBy = "groups")
     @JsonIgnore
     private Set<SocialUser> socialUsers = new HashSet<>();

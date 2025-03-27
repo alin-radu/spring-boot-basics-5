@@ -16,6 +16,9 @@ public class SocialProfile {
     private Long id;
 
     // User
+    // SocialProfile is the owner in the SocialProfile <-> SocialUser relationship;
+    // SocialProfile holds the @JoinColumn;
+    // SocialUser holds the mappedBy;
     @OneToOne
     @JoinColumn(name = "social_user_id")
     @JsonIgnore

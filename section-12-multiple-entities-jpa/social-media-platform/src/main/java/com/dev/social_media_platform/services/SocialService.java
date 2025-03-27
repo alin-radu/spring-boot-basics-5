@@ -19,6 +19,13 @@ public class SocialService {
         return socialUserRepository.findAll();
     }
 
+    // The CodeFlow
+//    SocialUser user = new SocialUser();
+//    SocialProfile profile = new SocialProfile();
+//    profile.setDescription("My Description");
+//
+//    user.setSocialProfile(profile);
+//    socialUserRepository.save(user);
     public SocialUser saveUser(SocialUser socialUser) {
         return socialUserRepository.save(socialUser);
     }

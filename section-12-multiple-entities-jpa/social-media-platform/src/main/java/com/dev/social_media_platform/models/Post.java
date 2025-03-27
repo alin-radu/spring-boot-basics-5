@@ -16,6 +16,9 @@ public class Post {
     private Long id;
 
     // User
+    // Post is the owner in the Post <-> SocialUser relationship;
+    // Post holds the @JoinColumn;
+    // SocialUser holds the mappedBy;
     @ManyToOne
     @JoinColumn(name = "social_user_id")
     @JsonIgnore

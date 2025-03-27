@@ -18,31 +18,42 @@ public class SocialUser {
     private Long id;
 
     // Profile
+    // SocialUser is NOT the owner in the SocialProfile <-> SocialUser relationship;
+    // SocialProfile holds the @JoinColumn;
+    // SocialUser holds the mappedBy;
     @OneToOne(mappedBy = "user",
-            cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private SocialProfile socialProfile;
 
     // Post
+    // SocialUser is NOT the owner in the Post <-> SocialUser relationship;
+    // Post holds the @JoinColumn;
+    // SocialUser holds the mappedBy;
     @OneToMany(mappedBy = "socialUser",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Post> posts = new ArrayList<>();
 
     // Group
+    // SocialUser is the owner in the SocialUser <-> SocialGroup relationship;
+    // SocialUser because holds the @JoinTable;
+    // SocialGroups holds the mappedBy;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_group",
+            name = "social_user_social_group",
             joinColumns = @JoinColumn(name = "social_user_id"),
             inverseJoinColumns = @JoinColumn(name = "social_group_id")
     )
     private Set<SocialGroup> groups = new HashSet<>();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setSocialProfile(SocialProfile socialProfile) {
+        if (socialProfile != null) {
+            socialProfile.setUser(this);
+        }
+        this.socialProfile = socialProfile;
     }
 
-    public void setSocialProfile(SocialProfile socialProfile) {
-        socialProfile.setUser(this);
-        this.socialProfile = socialProfile;
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : System.identityHashCode(this);
     }
 }
